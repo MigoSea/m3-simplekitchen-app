@@ -1,0 +1,104 @@
+@import "colors.less";
+@import "fonts.less";
+
+/* mixin for repeated button styles */
+.button-style() {
+  color: @white;
+  width: 100px;
+  height: 40px;
+  background: @primary-color;
+  margin-top: 2em;
+}
+
+nav {
+  font-size: 1em;
+  font-weight: bold;
+  float: left;
+
+  ul {
+    list-style-type: none;
+
+    li {
+      float: left;
+      margin: 0 5px 0 0;
+      color: @white;
+
+      a {
+        text-decoration: none;
+        color: @white;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+html {
+  font-size: 1em;
+  width: 100%;
+}
+
+body {
+  font-family: @body-font;
+  background: @body-bg;
+}
+
+header {
+  height: 50px;
+  width: 1350px;
+  margin: 0.8em auto 1em auto;
+}
+
+main {
+  background: @white;
+  width: 1350px;
+  min-height: 535px;
+  padding: 1.5%;
+  margin: 0 auto;
+
+  #intro-image {
+    float: left;
+    width: 800px;
+
+    img {
+      width: 800px;
+    }
+  }
+
+  #intro-text {
+    width: 550px;
+    height: 407px;
+    float: left;
+    background: @intro-bg;
+    text-align: center;
+    padding-top: 8em;
+
+    h3 {
+      font-size: 2em;
+      color: @dark-color;
+    }
+
+    span {
+      font-family: @heading-font;
+      font-size: 2em;
+    }
+  }
+}
+
+footer {
+  width: 1350px;
+  margin: 2em auto;
+  padding-left: 80px;
+  font-size: 0.85em;
+}
+
+/* apply mixin to buttons */
+button, .submit-buttton {
+  .button-style();
+}
+
+.submit-buttton {
+  border: 1px @dark-color; /* kept as color only (no style), to match original */
+}
