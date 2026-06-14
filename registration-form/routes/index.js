@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const auth = require('http-auth');
+const bcrypt = require('bcrypt');
 const { check, validationResult } = require('express-validator');
 
 const router = express.Router();
@@ -40,24 +41,33 @@ router.post('/register',
         check('email')
         .isLength({ min: 1 })
         .withMessage('Please enter an email'),
+        check('username')
+        .isLength({ min: 1 })
+        .withMessage('Please enter a username'),
+        check('password')
+        .isLength({ min: 6 })
+        .withMessage('Please enter a password with at least 6 characters'),
     ],
-    (req, res) => {
+    async (req, res) => {
         const errors = validationResult(req);
         if (errors.isEmpty()) {
-          const registration = new Registration(req.body);
-          registration.save()
-            .then(() => {res.send('Thank you for your registration!');})
-            .catch((err) => {
-              console.log(err);
-              res.send('Sorry! Something went wrong.');
-            });
-          } else {
+          try {
+            const registration = new Registration(req.body);
+            const salt = await bcrypt.genSalt(10);
+            registration.password = await bcrypt.hash(registration.password, salt);
+            await registration.save();
+            res.send('Thank you for your registration!');
+          } catch (err) {
+            console.log(err);
+            res.send('Sorry! Something went wrong.');
+          }
+        } else {
             res.render('form', { 
                 title: 'Registration form',
                 errors: errors.array(),
                 data: req.body,
              });
-          }
+        }
     });
 
 module.exports = router;

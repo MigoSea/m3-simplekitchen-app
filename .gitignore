@@ -1,0 +1,5 @@
+# Ignore installed packages
+registration-form/node_modules/
+
+# Ignore local environment files
+*.env
